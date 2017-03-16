@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Task</title>
+	<link rel="stylesheet" href="./style.css" class="href">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+    <script src="app.js"></script>
+
+</head>
+<body ng-app='items'>
+	<div class="container" ng-controller="itemsCtrl">
+		<div class="main" id="main">
+			<p class="title">Main</p>
+			<div class="overview">Overview</div>
+		</div>
+		<div class="content">
+			<div class="items" id="items">
+				<p class="title">Items</p>
+				<form name="formNewItem" ng-submit="addItem()" novalidate>
+					<input type="text" placeholder="Type name here" ng-model="newItem" required />
+					<button ng-disabled="formNewItem.$invalid">Add new</button>
+				</form>
+				
+				<div class="items-output">
+					<div ng-repeat="item in items track by $index" ng-click="showCom($index)">
+						<span class="itemText">{{item.text}}</span>
+						<span class="comQuan">{{item.comments.length}}</span>
+						<button ng-click="delItem($index)">Delete</button>
+					</div>
+				</div>
+
+			</div>
+			<div class="comments" id="comments">
+				<p class="title" ng-hide='showComBlock'>Comments</p>
+				<h4 ng-hide='showComBlock'>Select the item to see the comments to it</h4>
+				<div ng-show='showComBlock'>
+					<p class="title" >Comments  # {{selItemIndex + 1}}</p>
+					<div ng-repeat="comm in selCom" class="coms-output">
+						<div class="colorBox {{comm.cl}}"></div>
+						<div class="comText">{{comm.text}}</div>
+					</div>
+					<form ng-submit="addCom()">
+						<span class="colorBox"></span>
+						<input type="text" ng-model="newCom"/>
+						<button>Add comment</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
